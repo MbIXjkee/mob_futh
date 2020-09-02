@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mob_futh/button.dart';
 import 'package:mob_futh/res/colors.dart';
+import 'package:mob_futh/inner_shadow.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var _isSelected = false;
+  double blur = 10;
+  double offsetX = 10;
+  double offsetY = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +41,70 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       backgroundColor: backgroundColor,
-      body: Center(
-        child: Button(
-          isPressed: _isSelected,
-          activatedColor: buttonEnabledColor,
-          deactivatedColor: buttonDisabledColor,
-          onPressed: () {
-            setState(() {
-              _isSelected = !_isSelected;
-            });
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            height: 90,
+            width: 90,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: shadowMainColor,
+                    gradient: RadialGradient(
+                      colors: [
+                        shadowMainColor.withOpacity(0.0),
+                        shadowMainColor,
+                      ],
+                      center: AlignmentDirectional(0.0, 0.5),
+                      focal: AlignmentDirectional(0.0, 0.1),
+                      focalRadius: 0.005,
+                      radius: 0.95,
+                      stops: [0.5, 1],
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: shadowMainColor,
+                    gradient: RadialGradient(
+                      colors: [
+                        shadowTintColor.withOpacity(0.0),
+                        shadowTintColor,
+                      ],
+                      center: AlignmentDirectional(0.0, -0.5),
+                      focal: AlignmentDirectional(0.0, 0.1),
+                      focalRadius: 0.005,
+                      radius: 0.95,
+                      stops: [0.5, 1.0],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          InnerShadow(
+            shadows: [
+              Shadow(
+                  color: shadowMainColor, blurRadius: 5, offset: Offset(0, 5)),
+              Shadow(
+                  color: shadowTintColor, blurRadius: 5, offset: Offset(0, -5)),
+            ],
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(90 / 2),
+                  color: backgroundColor,
+                ),
+                height: 90,
+                width: 90,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
