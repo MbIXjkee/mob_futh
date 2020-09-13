@@ -56,7 +56,7 @@ class _MainBottomBarState extends State<MainBottomBar> {
           });
         },
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(seconds: 1),
           decoration: BoxDecoration(
             color: isSelected ? selectedItemColor : primaryColor,
             borderRadius: BorderRadius.all(
